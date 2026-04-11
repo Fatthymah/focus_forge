@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:focus_forge/onboarding.dart';
-import 'package:focus_forge/screens/login.dart';
+import 'package:focus_forge/screens/onboarding.dart';
+import 'package:focus_forge/auth/login.dart';
 import 'package:focus_forge/widgets/bottom_nav.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       final loggedIn = prefs.getBool("isLoggedIn") ?? false;
       final seenOnboarding = prefs.getBool("seenOnboarding") ?? false;
 
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 5));
 
       if (!mounted) return;
 

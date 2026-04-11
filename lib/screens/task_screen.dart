@@ -40,11 +40,11 @@ class _TaskScreenState extends State<TaskScreen> {
   Color get bgColor {
     switch (widget.energyLevel) {
       case 0:
-        return const Color(0xfff4c6c6); // low energy
+        return const Color(0xfff4c6c6);
       case 1:
-        return const Color(0xfff3e3b5); // medium energy
+        return const Color(0xfff3e3b5);
       case 2:
-        return const Color(0xffcde8d5); // high energy
+        return const Color(0xffcde8d5);
       default:
         return const Color(0xfffff5e0);
     }

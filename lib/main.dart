@@ -4,7 +4,7 @@ import 'package:focus_forge/models/focus_model.dart';
 import 'package:focus_forge/models/profile_model.dart';
 import 'package:focus_forge/models/task_model.dart';
 import 'package:focus_forge/models/user_model.dart';
-import 'package:focus_forge/splash.dart';
+import 'package:focus_forge/screens/splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
  Future<void> main() async{

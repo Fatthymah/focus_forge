@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:focus_forge/screens/login.dart';
+import 'package:focus_forge/auth/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingScreen extends StatefulWidget {

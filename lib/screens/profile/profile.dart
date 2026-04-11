@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:focus_forge/screens/login.dart';
+import 'package:focus_forge/constants/app_texts.app.dart';
+import 'package:focus_forge/auth/login.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/profile_model.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import '../../models/user_model.dart';
 
 
 class ProfileScreen extends StatefulWidget {
@@ -36,12 +38,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final prefs = await SharedPreferences.getInstance();
     userKey = prefs.getInt("currentUserKey") ?? -1;
 
-    if (userKey != -1 && box.containsKey(userKey)) {
+    if (userKey == -1) return;
+
+    // 1. If profile already saved → load from profileBox
+    if (box.containsKey(userKey)) {
       final profile = box.get(userKey)!;
-        nameController.text = profile.name;
-        emailController.text = profile.email;
-        bioController.text = profile.bio;
-        profileImagePath = profile.imagePath;
+      nameController.text = profile.name;
+      emailController.text = profile.email;
+      bioController.text = profile.bio;
+      profileImagePath = profile.imagePath;
+    }
+    // 2. Else → load from signup data (userBox)
+    else {
+      final userBox = Hive.box<UserModel>('userBox');
+      final user = userBox.get(userKey);
+
+      if (user != null) {
+        nameController.text = user.name;
+        emailController.text = user.email;
+        bioController.text = ""; // no bio at signup
+        profileImagePath = null;
+      }
     }
     setState(() {});
   }
@@ -148,7 +165,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 onPressed: saveProfile,
                 child: const Text(
-                  "Save Profile",
+                  //"Save Profile",
+                  AppTexts.saveProfile,
                   style: TextStyle(
                     color: Color(0xfffff5e0),
                     fontSize: 20,
@@ -168,8 +186,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       (route) => false,
                   );
                 },
-              child: const Text("Logout"),
+              child: const Text(
+                  "Logout",
+                style:TextStyle(
+                  color:Color(0xff312c51),
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                ),
+              ),
             ),
+            const SizedBox(height: 20),
 
             // ElevatedButton(
             //   onPressed: () async {
@@ -181,7 +208,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             //   },
             //   child: const Text("Show Onboarding (Demo)"),
             // ),
-
           ],
         ),
       ),
